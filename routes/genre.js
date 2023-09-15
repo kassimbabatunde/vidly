@@ -14,7 +14,7 @@ router.get('/:id',(req,res)=>{
     res.send(genre);
 });
 
-router.put('/',(req,res)=>{
+router.put('/', (req,res)=>{
     // Validate post request
     const {error} = validateGenre(req.body)
     if(error) return res.status(400).send(error.details[0].message);
@@ -27,7 +27,7 @@ router.put('/',(req,res)=>{
     res.send(genre);
 });
 
-router.put('/:id',(req,res)=>{
+router.put('/:id', (req,res)=>{
     const genre = genres.find(g => g.id === parseInt(req.params.id))
     if(!genre) return res.status(404).send("There is no such Genre Id in the database!!!");
     const { error } = validateGenre(req.body)
