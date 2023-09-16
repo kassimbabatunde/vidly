@@ -2,7 +2,7 @@ const request = require('supertest');
 let server;
 describe('api/genres', () =>{
     beforeEach(() => { server = require('../../index');});
-    afterEach(() => {server.close();});
+    afterEach(async () => {server.close();});
     
     describe('GET /', () =>{
         it('should return all genres in db', async () => {
