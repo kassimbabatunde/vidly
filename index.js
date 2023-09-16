@@ -3,8 +3,8 @@ require('winston-mongodb');
 const express = require('express');
 const app = express();
 require('./startup/routes')(app);
-require('./startup/db_connect')
-const logger = require('./middleware/logger');
+require('./startup/db_connect')()
+const logger = require('./middleware/logging');
 const home = require('./routes/home');
 app.use(logger);
 app.use('/',home);
