@@ -1,13 +1,14 @@
 const winston = require('winston');
+require('winston-mongodb');
 const express = require('express');
 const app = express();
-app.use(express.json());
-const logger = require('./middleware/logger')
-const genres = require('./routes/genres');
+require('./startup/routes')(app);
+require('./startup/db_connect')
+const logger = require('./middleware/logger');
 const home = require('./routes/home');
 app.use(logger);
 app.use('/',home);
-app.use('/api/genres',genres);
+
 
 winston.ExceptionHandler(
     new winston.transports.File({filename: 'uncaughtExceptions.log'})
@@ -17,8 +18,10 @@ process.on('unhandledRejection', (ex)=>{
 })
 winston.add(winston.transports.File, {filename: 'errorlog.log'});
 
-const server = app.listen(5000,()=>{
-    console.log('Listeing to port 5000...')
+const port = process.env.PORT || 5000;
+
+const server = app.listen(port,()=>{
+    console.log(`Listeing to port ${port}...`)
 })
 
 module.exports = server;
